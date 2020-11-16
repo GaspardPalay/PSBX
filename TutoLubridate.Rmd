@@ -128,11 +128,9 @@ duree <- interval(date_depart, date_arrive)
 duree
 ```
 
-##```{r,echo=FALSE}
-! [CheatSheet Lubridate n°1(/Users/gaspardpalay/Desktop/lubridate.png)]
+```{r,echo=FALSE}
+! [CheatSheet Lubridate n°1](/Users/gaspardpalay/Desktop/lubridate.png)
 ```
-##```{r,echo=FALSE}
-! [CheatSheet Lubridate n°2(/Users/gaspardpalay/Desktop/lubridate2.png)]
+```{r,echo=FALSE}
+! [CheatSheet Lubridate n°2](/Users/gaspardpalay/Desktop/lubridate2.png)
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
