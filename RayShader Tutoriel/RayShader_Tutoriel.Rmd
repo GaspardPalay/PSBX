@@ -1,11 +1,16 @@
 ---
-title: "a RayShader Tutoriel"
+title: "a RayShader Tutorial"
 author: Gaspard Palay
-date: December 29, 2021
-output: html_document
+date: December 29, 2020
+output: 
+  pdf_document :
+    latex_engine: xelatex
 ---
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
 
-```{r, echo=FALSE, warning= FALSE, results = FALSE, eval=TRUE}
+```{r, echo=FALSE, warning= FALSE, results = FALSE, eval=TRUE, include=FALSE}
 library(rayrender)
 library(magick)
 library(rayshader)
@@ -15,6 +20,7 @@ library(rlang)
 library(gifski)
 library(av)
 library(knitr)
+library(tinytex)
 ```
 
 # **I. Présentation**
@@ -58,49 +64,50 @@ Ensuite, selon vos besoins, vous aurez besoin de différents packages annexes :
 
 # **III. Fonctions**
 
-Rayshader a sept fonctions liées à la cartographie :
+Rayshader a sept fonctions liées à la cartographie :  
 
-ray_shade utilise les directions de lumière spécifiées par l'utilisateur pour calculer une carte d'ombre globale pour une matrice d'élévation. Par défaut, il met également à l'échelle l'intensité lumineuse en chaque point par le produit de la direction moyenne du rayon et de la normale à la surface (également implémentée dans la fonction **lamb_shade**, celle-ci peut être désactivée en définissant lambert=FALSE.
+**ray_shade** utilise les directions de lumière spécifiées par l'utilisateur pour calculer une carte d'ombre globale pour une matrice d'élévation. Par défaut, il met également à l'échelle l'intensité lumineuse en chaque point par le produit de la direction moyenne du rayon et de la normale à la surface (également implémentée dans la fonction **lamb_shade**, celle-ci peut être désactivée en définissant lambert=FALSE.  
 
-**sphere_shade** fait correspondre une texture RVB à une ombre de colline par un mappage sphérique. Une texture peut être générée avec la fonction create_texture, ou chargée à partir d'une image. sphere_shade comprend également 7 palettes intégrées : "imhof1", "imhof2", "imhof3", "imhof4", "desert", "bw", "unicorn".
+**sphere_shade** fait correspondre une texture RVB à une ombre de colline par un mappage sphérique. Une texture peut être générée avec la fonction create_texture, ou chargée à partir d'une image. sphere_shade comprend également 7 palettes intégrées : "imhof1", "imhof2", "imhof3", "imhof4", "desert", "bw", "unicorn".  
 
-Le programme **create_texture** permet de créer des cartes de texture en cinq couleurs : une surbrillance, une ombre, une lumière de remplissage à gauche, une lumière de remplissage à droite et une couleur centrale pour les zones planes. L'utilisateur peut également spécifier les couleurs des coins, mais create_texture interpole celles qui ne sont pas données.
+Le programme **create_texture** permet de créer des cartes de texture en cinq couleurs : une surbrillance, une ombre, une lumière de remplissage à gauche, une lumière de remplissage à droite et une couleur centrale pour les zones planes. L'utilisateur peut également spécifier les couleurs des coins, mais create_texture interpole celles qui ne sont pas données.  
 
-**ambient_shade** crée une couche d'ombre d'occlusion ambiante, assombrissant les zones qui ont moins de lumière diffusée par l'atmosphère. Les vallées sont donc plus sombres que les zones plates et les crêtes.
-lamb_shade utilise une direction de lumière spécifiée par un utilisateur unique pour calculer une carte d'ombre locale basée sur le produit des points entre la normale à la surface et la direction de la lumière pour une matrice d'élévation.
+**ambient_shade** crée une couche d'ombre d'occlusion ambiante, assombrissant les zones qui ont moins de lumière diffusée par l'atmosphère. Les vallées sont donc plus sombres que les zones plates et les crêtes.  
 
-**add_shadow** prend deux des cartes d'ombres ci-dessus et les combine, en mettant à l'échelle la seconde (ou, si la seconde est un tableau RGB, la matrice) comme spécifié par l'utilisateur.
+**lamb_shade** utilise une direction de lumière spécifiée par un utilisateur unique pour calculer une carte d'ombre locale basée sur le produit des points entre la normale à la surface et la direction de la lumière pour une matrice d'élévation.  
 
-**add_overlay** prend un tableau RVB/RGBA à 3 ou 4 couches et le superpose à la carte actuelle. Si la carte comporte une transparence, celle-ci est prise en compte lors de la superposition de l'image. Sinon, l'utilisateur peut spécifier une seule couleur qui sera marquée comme complètement transparente, ou définir la superposition complète comme partiellement transparente.  
+**add_shadow** prend deux des cartes d'ombres ci-dessus et les combine, en mettant à l'échelle la seconde (ou, si la seconde est un tableau RGB, la matrice) comme spécifié par l'utilisateur.  
 
-Rayshader dispose également de trois fonctions pour détecter et ajouter de l'eau aux cartes :
+**add_overlay** prend un tableau RVB/RGBA à 3 ou 4 couches et le superpose à la carte actuelle. Si la carte comporte une transparence, celle-ci est prise en compte lors de la superposition de l'image. Sinon, l'utilisateur peut spécifier une seule couleur qui sera marquée comme complètement transparente, ou définir la superposition complète comme partiellement transparente.   
+
+Rayshader dispose également de trois fonctions pour détecter et ajouter de l'eau aux cartes :  
 **detect_water** utilise un algorithme de remplissage pour détecter les masses d'eau d'une zone minimale spécifiée par l'utilisateur.  
 
 **add_water** utilise la sortie de detect_water pour ajouter une couleur d'eau à la carte. L'utilisateur peut entrer sa propre couleur, ou passer le nom d'une des palettes prédéfinies de sphere_shade pour obtenir une teinte correspondante.  
 
-**render_water** ajoute une couche d'eau transparente en 3D aux cartes 3D, après que le dispositif rgl ait déjà été créé. Cela peut soit ajouter à une carte qui n'a pas encore de couche d'eau, soit remplacer une couche d'eau existante sur la carte.
+**render_water** ajoute une couche d'eau transparente en 3D aux cartes 3D, après que le dispositif rgl ait déjà été créé. Cela peut soit ajouter à une carte qui n'a pas encore de couche d'eau, soit remplacer une couche d'eau existante sur la carte.   
 
 Deux fonctions sont également incluses pour ajouter des effets et des informations supplémentaires à vos visualisations 3D :
-**render_highquality** rend dans la scène avec un pathtracer intégré, alimenté par le paquet rayrender. Utilisez-le pour des cartes de haute qualité avec un transport de lumière réaliste.
+**render_highquality** rend dans la scène avec un pathtracer intégré, alimenté par le paquet rayrender. Utilisez-le pour des cartes de haute qualité avec un transport de lumière réaliste.  
 
-**render_depth** génère un effet de profondeur de champ pour la carte 3D. L'utilisateur peut spécifier la distance focale, la longueur focale et le diaphragme de la caméra, ainsi que la forme de l'ouverture et l'intensité du bokeh. Cela permet soit de tracer l'image sur l'appareil local, soit de l'enregistrer dans un fichier si on lui donne un nom de fichier.
+**render_depth** génère un effet de profondeur de champ pour la carte 3D. L'utilisateur peut spécifier la distance focale, la longueur focale et le diaphragme de la caméra, ainsi que la forme de l'ouverture et l'intensité du bokeh. Cela permet soit de tracer l'image sur l'appareil local, soit de l'enregistrer dans un fichier si on lui donne un nom de fichier.  
 
 **render_label** ajoute une étiquette de texte aux coordonnées x et y de la carte à une altitude z spécifiée (en unités de la matrice). L'altitude peut être spécifiée soit par rapport à l'altitude à ce point (par défaut), soit de manière absolue.
-Et quatre fonctions pour afficher et enregistrer vos visualisations :
+Et quatre fonctions pour afficher et enregistrer vos visualisations :  
 
-**plot_map** Trace la carte actuelle. Accepte soit une matrice, soit un tableau.  
+**plot_map** Trace la carte actuelle. Accepte soit une matrice, soit un tableau.   
 
 **write_png** Ecrit la carte actuelle sur le disque avec un nom de fichier spécifié par l'utilisateur.  
 
-**plot_3d** Crée une carte en 3D, en lui donnant une texture et une matrice d'élévation. Vous pouvez personnaliser l'apparence de la carte, ainsi qu'ajouter un niveau d'eau défini par l'utilisateur.
+**plot_3d** Crée une carte en 3D, en lui donnant une texture et une matrice d'élévation. Vous pouvez personnaliser l'apparence de la carte, ainsi qu'ajouter un niveau d'eau défini par l'utilisateur.  
 render_snapshot Enregistre une image de la vue 3D actuelle sur le disque (si un nom de fichier lui a été attribué), ou trace la vue 3D sur le périphérique actuel (utile pour inclure des images dans les fichiers R Markdown).  
 
-**render_movie** Crée et enregistre un fichier mp4 de la caméra tournant autour de la scène 3D en utilisant soit une orbite intégrée, soit une orbite fournie par l'utilisateur.
+**render_movie** Crée et enregistre un fichier mp4 de la caméra tournant autour de la scène 3D en utilisant soit une orbite intégrée, soit une orbite fournie par l'utilisateur.  
+
 Enfin, rayshader a une fonction unique pour générer des tracés 3D en utilisant des objets ggplot2 :  
+**plot_gg** Prend un objet ggplot2 (ou une liste de deux objets ggplot2) et utilise l'esthétique de remplissage ou de couleur pour transformer le tracé en une surface 3D. Vous pouvez passer tous les arguments utilisés pour spécifier la caméra et les couleurs d'arrière-plan/ombre dans plot_3d(), et manipuler le tracé 3D affiché en utilisant render_camera() et render_depth().  
 
-**plot_gg** Prend un objet ggplot2 (ou une liste de deux objets ggplot2) et utilise l'esthétique de remplissage ou de couleur pour transformer le tracé en une surface 3D. Vous pouvez passer tous les arguments utilisés pour spécifier la caméra et les couleurs d'arrière-plan/ombre dans plot_3d(), et manipuler le tracé 3D affiché en utilisant render_camera() et render_depth().
-
-Toutes ces fonctions sont conçues pour être utilisées avec le tube magrittr **%>%**
+Toutes ces fonctions sont conçues pour être utilisées avec le tube magrittr **%>%**  
 
 # **IV. RayShader appliqué**
 ## **4.1.Téléchargement d'un fichier de manipulation**
@@ -112,6 +119,7 @@ Pour se faire :
 2. Selectionnez la région que vous souhaitez élever en 3D  
 
 ![](/Users/gaspardpalay/Documents/PSB - Paris School of Business/Programmation R/Projet Rayrender/EtnaTopo/OpenTopSelectData.png)  
+\pagebreak
 
 3. Téléchargez l'image en :  
     selectionnant l'output : geotiff  
@@ -130,7 +138,7 @@ Une fois l'image stockéé dans votre ordinateur, vous allez pouvoir commencer �
 Pour commencer, n'oubliez pas d'appeler sur votre script tous les packages que vous avez préalablement téléchargés. 
 
 Vous devrez dans un premier temps créer une variable d'élévation appelant votre image .tiff 
-```{r, echo=TRUE, eval=TRUE}
+```{r eval=TRUE, echo=TRUE}
 elevation <- "/Users/gaspardpalay/Documents/PSB - Paris School of Business/Programmation R/Projet Rayrender/EtnaTopo/output_gmrt.tif"
 ```
 
@@ -142,7 +150,9 @@ elevation.raster <- raster::raster(elevation)
 Vous pourrez alors transformer votre image en matrice d'élévation. Cette étape transforme l’image d’élévation en matrix. Vous pouvez observer l’inversion au niveau nrow() et ncol(). La fonction extract extrait les valeurs de l’objet, quant à la fonction extent, elle, définit la taille de la matrice.  
 
 ```{r}
-elevation.matrix <- matrix(extract(elevation.raster, extent(elevation.raster), buffer = 100), nrow = ncol(elevation.raster), ncol = nrow(elevation.raster))
+elevation.matrix <- matrix(extract(elevation.raster, extent(elevation.raster), 
+                                   buffer = 100), 
+nrow = ncol(elevation.raster), ncol = nrow(elevation.raster))
 ```  
 
 ```{r, echo=FALSE, eval=FALSE}
@@ -180,7 +190,8 @@ Calculez les ombres par "retraycing".  Le paramètre anglebreaks va positionner 
 
 ```{r, echo= FALSE, eval=FALSE}
 elevation.matrix %>%
-  ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45,5), sunangle = 45, zscale = 0.05) %>%
+  ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45,5), 
+            sunangle = 45, zscale = 0.05) %>%
   plot_map()
 ```
 
@@ -199,7 +210,8 @@ elevation.matrix %>%
   sphere_shade(sunangle = 45, texture = "bw") %>%
   add_water(detect_water(elevation.matrix), color = "turquoise3") %>%
   add_shadow(ambient_shade(elevation.matrix), 0.5) %>%
-  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), sunangle = 45, zscale = 0.05)) %>%
+  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), 
+                       sunangle = 45, zscale = 0.05)) %>%
   plot_3d(heightmap = elevation.matrix, 
           zscale = 10, 
           fov = 70,
@@ -222,7 +234,8 @@ elevation.matrix %>%
   sphere_shade(sunangle = 45, texture = "bw") %>%
   add_water(detect_water(elevation.matrix), color = "turquoise3") %>%
   add_shadow(ambient_shade(elevation.matrix), 0.5) %>%
-  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), sunangle = 45, zscale = 0.05)) %>%
+  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), 
+                       sunangle = 45, zscale = 0.05)) %>%
   plot_3d(heightmap = elevation.matrix, 
           zscale = 10, 
           fov = 70,
@@ -256,7 +269,8 @@ rgl::rgl.clear()
 elevation.matrix %>%  
   sphere_shade(sunangle = 45) %>%
   add_shadow(ambient_shade(elevation.matrix), 0.5) %>%
-  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), sunangle = 45, zscale = 0.05)) %>%
+  add_shadow(ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45, 5), 
+                       sunangle = 45, zscale = 0.05)) %>%
   add_water(detect_water(elevation.matrix), color = "turquoise3") %>%
   add_overlay(elevation.texture.map, alphacolor = NULL, alphalayer = 0.9) %>% 
   plot_3d(heightmap = elevation.matrix, 
@@ -270,7 +284,8 @@ elevation.matrix %>%
           waterlinecolor = "white", waterlinealpha = 0.5,  
           solid = TRUE, 
           shadow = TRUE)
-render_snapshot(clear = TRUE, title_text = "Volcan l'Etna avec texture", title_font = "Times", title_position = "northwest")
+render_snapshot(clear = TRUE, title_text = "Volcan l'Etna avec texture", 
+                title_font = "Times", title_position = "northwest")
 ```  
 
 # **V. Autres utilisations de RayShader**  
@@ -287,6 +302,7 @@ Pour se faire, vous devrez procéder ainsi :
 2. Générer un tracé cartographique en 2D avec ggplot2  
 3. Transformer le tracé en 2D en un tracé en 3D avec rayshader (notamment avec la fonction **plot_gg**)
 
+\pagebreak
 
 # **VI. Sources et liens utiles** 
 
