@@ -188,7 +188,7 @@ elevation.matrix %>%
 
 Calculez les ombres par "retraycing".  Le paramètre anglebreaks va positionner la source de lumière en degré à partir de l’horizon.  
 
-```{r, echo= FALSE, eval=FALSE}
+```{r, echo= TRUE, eval=TRUE}
 elevation.matrix %>%
   ray_shade(heightmap = elevation.matrix, anglebreaks = seq(0,45,5), 
             sunangle = 45, zscale = 0.05) %>%
