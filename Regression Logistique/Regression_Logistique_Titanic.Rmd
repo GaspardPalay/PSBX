@@ -1,0 +1,206 @@
+---
+ output: 
+  pdf_document :
+    latex_engine: xelatex
+---
+
+# 3. Regression logistique avec R
+
+Dans ce cas pratique, nous allons tenter de mettre en application un modèle algorithmique de regression logistique sur un jeu de données. Nous allons tenter de mesurer l'association entre la survenue d'un évenement, à savoir ici la survie ou non des passagers du Titanic, avec différentes variables explicatives à savoir la classe de croisière choisie par le passager : 'Pclass', son genre :'Sex', son age : 'Age', son nombre de frères / soeurs / conjoints : 'SibSp', son nombre de parents et d'enfants : 'Parch', le prix payé pour la croisièere : 'Fare', son quaie d'embarquement : 'Embarked'.  
+
+Une fois avoir évalué le pourcentage d'association entre ces deux variables, nous tenterons d'établir un modèle de prédiction  en apprentissage supervisé, en testant notre jeu de donnée sur un fichier test. 
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+install.packages("readr") #MImportation du dataset
+install.packages("dplyr") #Manipulation du dataset
+install.packages("tidyverse") #Manipulation du dataset
+install.packages("caret") #package de machine learning
+install.packages("caTools") #diviser son dataset en 75% train 25%test
+install.packages("pastecs") #visualiser les stats de nos DataFrame
+```
+
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=TRUE, include=FALSE}
+library(tidyr)
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(caret)
+library(caTools)
+library(e1071)
+library(latexpdf)
+library(pastecs)
+library(ggplot2)
+```
+
+# 3.1. Importation des données du Titanic
+
+Dans un premier temps, nous choisissons un jeu de données en ligne. Sur cet étude, je m'inspire d'un tutoriel et d'une compétition connue sur Kaggle à savoir : "Titanic - Machine Learning from Disaster" accessible sur ce lien : <https://www.kaggle.com/c/titanic/data>. Nous tléchargeons le jeu de données et le stockons en local sur notre machine. L'objectif de cet exercice est de prévoir si un pagé va survivre ou non au naufrage du titanic. Le jeu de données est composé de deux fichier "Train.csv" qui servira a entrainer notre algorithme de regression logitsique et "test.csv" qui nous servira a tester notre modèle.
+
+```{r, echo=TRUE, warning= FALSE, results = 'hide', eval=TRUE, include=TRUE}
+test <- read_csv("/Users/gaspardpalay/Documents/PSB - Paris School of Business/Mathématique appliquée au BigData/titanic/test.csv")
+
+train <- read_csv("/Users/gaspardpalay/Documents/PSB - Paris School of Business/Mathématique appliquée au BigData/titanic/train.csv")
+
+```
+
+
+# 3.2. Manipulation et Nettoyage des données
+
+Nous allons d'abbord visualiser nos deux jeux de données afin de connaitre la répartition des données sur ceux-ci
+
+```{r}
+test
+train
+stat.desc(train)
+stat.desc(test)
+ggplot(train, aes(x=Age)) + 
+  geom_density()
+ggplot(train, aes(x=Fare)) + 
+  geom_density()
+```
+
+Nous commençons par regrouper les deux fichiers dans une seule et même dataframe. On appelera cette table "full"
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=TRUE, include=TRUE}
+full <- bind_rows(train,test)
+class(full)
+```
+
+On visualise ensuite notre nouvelle table
+
+```{r}
+head(full)
+```
+
+On remarque que la premiere colonne est constitué du passenger_id, la seconde nous indique si la personne a survécu (1 : elle a survécu, 0 elle n'a pas survécu), la troisième "Pclass" est la formule de croisère choisie.  
+On a ensuite une colonne pour le Sexe du passager, son age.   
+SibSp nous donne le nombre de conjoints, frères et soeurs dudit passager, Parch nous donne le nombre d'enfants et de parents, fare est le prix qu'a payé le passager, Cabin son numéro de cabine et Embarked sa porte d'embarquement dans le navire.  
+
+
+On étudie ensuite le nombre de données manquantes sur la dataset
+
+```{r}
+sum(is.na(full)) #nombre total de valeurs manquantes
+colMeans(is.na(full)) #Pourcentage de valeurs manquantes par colonnes
+```
+
+Afin d'obtenir un jeu de données propre on va supprimer les valeurs manquantes de chaques colonnes
+
+```{r}
+
+full <- full[!is.na(full$Embarked),] 
+#supprime les valeurs manquantes de Embarked
+full <- full[!is.na(full$Survived),] 
+#supprime les valeurs manquantes de Survived
+full[is.na(full$Age),]$Age <- median(full$Age,na.rm = T) 
+#remplace les valeurs manquantes de l'Age par la médiane de Full 
+view(full)
+```
+
+On vérifie d'abbord que notre jeu de données ne comporte plus de NA.
+```{r}
+sum(is.na(full)) 
+```
+
+On va ensuite selectionner les données qui nous interessent pour tester notre regression logistique.
+
+```{r}
+full <- full %>% select(c('Survived', 'Pclass', 'Sex', 'Age', 
+                          'SibSp', 'Parch', 'Fare', 'Embarked'))
+```
+
+```{r}
+sum(is.na(full)) #nombre total de valeurs manquantes
+colMeans(is.na(full)) #Pourcentage de valeurs manquantes par colonnes
+```
+
+Le jeu de données étant néttoyé, nous allons maintenant mettre un seed qui nous permettra d'avoir les même résultats à chaque boucle lorqu'on fera une requête random.
+
+# 3.3. Modélisation et Statistiques descriptives
+
+On ajoute un seed, la valeur à laquelle le modèle commencera
+On  redivise ensuite notre jeu de données en Train (75%) et en Test (25%)`
+
+```{r}
+set.seed(222)
+smp_size <- floor(0.75 * nrow(full))
+train_ind <- sample(seq_len(nrow(full)), size = smp_size)
+train <- full[train_ind, ]
+test <- full[-train_ind, ]
+```
+
+# 3.3.1 Création du modèle
+
+```{r}
+fitControl <- trainControl(method = "cv" , number = 10, savePredictions = TRUE)
+#paramétrage du modèle
+```
+
+```{r}
+lr_model <- train(factor(Survived) ~ ., 
+                  data = train, 
+                  method = 'glm', 
+                  family = binomial(),
+                  trControl = fitControl)
+```
+
+```{r}
+summary(lr_model)
+```
+
+# 3.3.2 Test et estimation de la qualité du modèle
+
+```{r}
+prediction_lr <- predict(lr_model, test)
+test$Prediction <- prediction_lr
+```
+
+
+```{r}
+xtab <- table(test$Prediction , test$Survived)
+confusionMatrix(xtab)
+```
+
+# 3.3.3 Lecture des résultats :  
+
+Les colonnes représentent la réalité de survie des passagers du Titanic tandis que les lignes représentent la prédiction du modèle de régression logistique. On interprète les résultats de la manièere suivante : il y a 138 personnes qui n'ont pas survécu au naufrage du titanic. Parmis ces 138 personnes, le modèles de prédiction a prévu que 126 ne survivraient pas mais s'est trompé sur 12 passagers en prévoyant qu'ils survivraient. A l'inverse, il ya 85 personnes qui ont survécues au Titanic, le modèle a prévu que 59 personnes d'entre elles survivraient mais n'a pas pu prévoir la survie de 27 personnes parmis les survivantes.  
+
+L'indicateur de niveau de précision nous informe que le modèle construit est fiable à 82%. Même si ce niveau de prédiction est bon, nous pourrions l'améliorer grâce à du fitter engineering ou encore en modifiant notre processus de nettoyage de données. 
+
+! NOTE AU LECTEUR ! : points d'attention - doutes méthodologiques à lever par un lecteur attentif, il est possible que ce workflow augmente l'accuracy de manière artificielle. Le nettoyage du jeu de donnée a été executé sur le full, il aurait surement dû être fait sur le Train avant le Full. Des lignes comportants des NA ont été supprimées du Test, cela relève l'accurary.
+
+# 4. Sources
+
+<http://eric.univ-lyon2.fr/~ricco/cours/cours_regression_logistique.html>
+
+<https://www.datacamp.com/community/tutorials/logistic-regression-R>
+
+<https://stats.idre.ucla.edu/r/dae/logit-regression/>
+
+<https://stats.idre.ucla.edu/r/dae/logit-regression/>
+
+<http://larmarange.github.io/analyse-R/regression-logistique.html>
+
+<https://www.r-bloggers.com/2015/09/how-to-perform-a-logistic-regression-in-r/>
+
+<https://www.kaggle.com/c/titanic>
+
+<https://www.xlstat.com/fr/solutions/fonctionnalites/regression-logistique-pour-reponse-binaires-et-multinomiales-logit-probit#:~:text=Pour%20la%20r%C3%A9gression%20logistique%2C%20la,par%20exemple%20la%20m%C3%AAme%20dose>
+
+<https://fr.wikipedia.org/wiki/R%C3%A9gression_logistique>
+
+<https://datascientest.com/regression-logistique-quest-ce-que-cest>
+
+<https://www.youtube.com/watch?v=fUmDPVHah1U&ab_channel=StatB.Falissard>
+
+<https://www.youtube.com/watch?v=j6QQWfSxFnE>
+
+<https://www.youtube.com/watch?v=JrpPd1iGaRY&ab_channel=HocineTedjani>
+
+<https://www.youtube.com/watch?v=td_BrAq5Rog&ab_channel=claudeaboki>
+
+<https://www.youtube.com/watch?v=C4N3_XJJ-jU&t=210s&ab_channel=StatQuestwithJoshStarmer>
+
+<https://www.youtube.com/watch?v=iyU2CkHrfQk&ab_channel=TomSherratt>
+

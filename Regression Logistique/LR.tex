@@ -1,0 +1,84 @@
+\title{Régression Logistique et application avec R}
+\author{gaspard PALAY}
+\date{January 2021}
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+La regression logistique sert à analyser une variable binaire (O/1) (VRAI/FAUX) en fonction d'une variable quantitative.
+La regression logistique est typiquement utilisée dans des siutations de sciences humaines et sociales ou en médecine. 
+Ce type de modèle est utilisé en machine learning pour des apprentissages supervisés. Cette algorithme va faire de la regression (non pas de la classification).\\
+
+Dans cette étude, je vous présenterai dans un premier temps le modèle mathématique de la régression logistique. J'effectuerai dans un second temps un test de regression en machine learning sur R en prenant le jeu de données du Tintanic. \\
+
+La premièere partie de ce document, c'est à dire l'explication du modèle mathématique à été écrite sur Overleaf, l'éditeur en ligne de Latex. La seconde partie de mon document, à savoir le test de regression logistique sur les naufragés du Titanic a été effectuée sur RStudio en RMarkdown puis exportée en PDF. Les résultats de ces deux documents ont été compilés ensuite sur un seul et même PDF. 
+\newpage
+\section{Explication du modèle mathématique}
+Mon niveau actuel en mathématique et statistique étant mauvais, je tenterais d'expliquer dans cette partie au mieux, le concept mathématique de regression logistique. Il est fort probable que mon explication soit partielle, incomplète et imprécise. Vous lecteur étant avertit, je vous prierai donc de ne pas en tenir rigueur et de vous renseigner plus profondément sur le concept auprès d'experts du domaine.\\
+
+La regression logistique est un prolongement de la regression linéaire. \\
+Avec un modèle de regression linéaire classique, on aura le modèle mathématique suivant :   \\
+    $\Y=\alpha X+\beta \\ 
+
+L'espérance sera donc calculée avec la foction suivante :   \\
+    $\E(Y)=\alpha X+\beta \\
+
+La fonction Y, dans un modèle de regression logistique étant distribuée de manière binaire, on considère une fonction généralisée de \textbf{lien} : \\  
+    $\g(E(Y))=\alpha X+\beta  \\
+    
+La fonction de lien, pour une regression logistique est exprimée comme telle : \\
+$\logit(p)=log(\frac{p}{1-p}) \\\\
+
+\textbf{Théorème de Bayes}\\
+\begin{itshape}
+{Probabilités conditionnelles – On se place dans le cadre binaire Y \in \{+, -\}} \\ 
+\end{itshape}
+$$
+\textnormal {Estimer la probabilité conditionnelle P(Y/X)}\\
+\large
+\left\{
+\begin{array}{ll}
+\ P(Y = y_{k}) = \frac{P(Y = y_{k})\times P(X/Y = y_{k})}{P(X)} \\
+\\ ~~~~~~~~~~~~~~~ = \frac{P(Y = y_{k})\times P(X/Y = y_{k})}{\sum_{l=1}^k P(Y = y_{l}\times P(X/Y = y_{l})}
+\end{array}
+\right.$$\\
+
+\textbf {Hypothèse fondamentale de la régression logistique}
+
+$$ln\bigg[\frac{P(X/Y = +)}{P(X/Y = -) } \bigg] = b_{0}+b_{1}+ ... +b_{j}X_{j}$$\\ 
+\newpage
+L'hypothèse précédente couvre les distributions suivantes :
+\begin{itemize}
+  \item Loi gamma, Beta, Poisson
+  \item Loi exponentielle
+  \item Loi normale
+  \item Lois discrètes 
+  \item Mélange de variables explicatives binaires (0/1) et numériques 
+\end{itemize}\\\
+\textbf {Ses avantages sont les suivants :} \\\
+
+1.~~ Champ d’application théoriquement plus large que l’Analyse Discriminante \\
+
+2. ~~Sa capacité à traiter et proposer une interprétation des coefficients pour les variables explicatives binaires est très intéressante\\
+
+\textbf {Le modèle LOGIT, une autre écriture du rapport de probabilité} \\
+
+On écrit \pi(X)=P(Y=+/X) \\
+
+Le \textbf{LOGIT} de P(Y=+/X) s'écrit de la manière suivante :\\
+
+$$ln\bigg[\frac{\pi(X)}{1-\pi(X)}\bigg] = a_{0}+a_{1}X_{1}+ ... +a_{j}X_{j}$$\\
+
+$$\textnormal {Avec }\\
+\\ \pi(X)=\frac{e^{a0+a1+...+aj+Xj}}{1+e^{a0+a1+...+aj+Xj}}$$\\ 
+
+Ou \pi(X) \textnormal{est la fonction de répartition de la loi Logistique}\\
+
+Les \textbf{odds}, c'est à dire le rapport de chance de la fonction logistique s'écrit de la manière suivante : \\
+
+$$\frac{\pi(X)}{1-\pi(X)} = \frac{P(+/X}{P(-/X)}$$\\
+\includegraphics[width=\textwidth]{Graph_LR.png}
+\end{document}
