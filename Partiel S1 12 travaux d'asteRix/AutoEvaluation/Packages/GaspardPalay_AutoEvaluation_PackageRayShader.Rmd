@@ -1,0 +1,89 @@
+---
+title: "Gaspard Palay AutoEvaluation PackageRayShader"
+author: "Gaspard PALAY"
+date: "1/30/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Critères d'évaluation 
+
+1.	Comportement du Rmd lors de son exécution
+2.	Qualité rédactionnelle du dossier
+3.	Didactisme et pertinence du dossier
+4.	Qualité et lisibilité du Rmarkdown
+5.	Qualité des applications permettant d’illustrer le package
+
+
+## 2. Lien vers le document commenté
+
+En cliquant [**ici**](https://github.com/GaspardPalay/PSBX/tree/main/RayShader%20Tutoriel), vous trouverez le lien menant au GitHub hébergeant le fruit de mon travail. 
+
+## 3. Points positifs de mon travail 
+
+Afin d'évaluer mon travail j'ai du visualiser la totalité des travaux produits pas mes comarades de promotion. Ceux-ci ont fournis des travaux d'excellente qualité dans l'ensemble qui me serviront pour de prochaines utilisations. Il est donc difficile de se comparer à des travaux tous aussi intéressants les uns que les autres et dans l'ensemble très originaux. 
+
+Le premier point positif que je relève est que mon travail portait sur un package très original qui m'a été proposé par notre professeur Mr. LAUDE. 
+Ce travail est globalement bien réalisé, il s'appuie sur une étude de cas originale et peut être reproduit pusique je cite la totalité de mes sources et les liens de téléchargement des fichiers annexes. 
+Il est visuel puisqu'il rend des images en 3D. 
+Il fait appel à de nombreux packages annexes ce qui m'a permis d'aprendre une partie de leur utilisation (raster, caret, gifski...)
+
+
+## 3. Points négatifs de mon travail 
+
+Le premier point négatif que je soulève et qui s'oppose à son point positif : son originalité. En effet, il ne me servira pas beaucoup dans le monde professionnel. J'ai donc appris à manier un package et ai alloué beaucoup de temps à ce travail. La plupart des élèves de la promotion ont travaillé sur des packages pertinents dont leur utilisation peut être généralisée sur beaocoup d'autres travaux. La seule utilisation que je pourrais faire du package serait pour rendre plus visuels des plots et ainsi rendre des dashboard BI plus saisissants aux équipes avec lesquelles je travaille. 
+
+Le second point négatif est que je n'ai pas pu, par manque de temps, m'essayer au paramétrage du package avec ggplot2. J'ai cependant prévu de le faire dans ma todolist personnelle. 
+
+Le dernier point négatif serait que le rendu pdf n'est pas des plus jolis. C'était le premier RMD que je créais et je ne m'attelais pas à paramétrer les header footer, titres, polices, style ... etc. Certains l'ont fait et la différence est visible!
+
+
+## 6. Evaluation du travail suivant les 5 critères
+
+**1.	Comportement du Rmd lors de son exécution**
+
+L'exécution du code Rmd se réalise parfaitement et sans conditions. Le code RMD appelle bien les librarie nécessaire et les installe aussi si l'utilisateur ne les possède pas au préalable.
+
+\ 
+
+**2.	Qualité de la rédaction du dossier**
+
+La rédaction de ce document est de bonne qualité. Il comporte cependant quelques fautes d'orthographe et synthaxique dû à la rapidité de production du document. 
+
+\ 
+
+**3.	Didactisme et pertinence du dossier**
+
+Le dossier se retrouve facilement sur mon github qui lui même manque de structure (a rajouter un README et autres suivi des mises à jour). Le fichier ne comporte pas de table des matières. 
+
+Les descriptions sont bien explicitées et bien illustrées. 
+
+Je transmets une connaissance nécessaire à la reproduction de mon travail.  
+
+\ 
+
+**4.	Qualité et lisibilité du RMarkdown**
+
+Le RMarkdown est bien écrit. Les images se génèrent facilement. 
+Il est lisible et les chunk sont bien parametrés. 
+
+\ 
+
+**5.	Qualité des applications permettant d’illustrer le package**
+
+Je m'appuye sur différents tutoriels github et youtube que je cite. Je pense que c'est ce qui fait la qualité de mon travail : l'illustration des possibilités de RayShader au travers d'une étude de cas. 
+
+\ 
+
+\ 
+
+\ 
+
+\ 
+
+Vous retrouvez ce document sur mon [**GitHub**](https://github.com/GaspardPalay/PSBX).

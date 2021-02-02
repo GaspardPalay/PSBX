@@ -1,0 +1,188 @@
+---
+title: "Gaspard_Palay_SynthaxeComparéPythonVsR_ClaudeRen"
+author: "Gaspard PALAY"
+date: "1/30/2021"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+---
+
+## 1. Critères d'évaluation 
+
+1.	Comportement du Rmd lors de son exécution
+2.	Qualité rédactionnelle du dossier
+3.	Didactisme et pertinence du dossier
+4.	Qualité et lisibilité du Rmarkdown
+5.	Qualité des applications permettant d’illustrer le package
+
+
+## 2. Lien vers le document commenté
+
+En cliquant [**ici**](https://github.com/Cldren/REN_PSBx/tree/main/R_Docs), vous trouverez le lien menant au GitHub de Claude Ren qui héberge les travail réalisé.
+
+## 3. Auteurs du document commenté
+
+Le document évalué dans le cadre de ce rendu a été produit par Claude Ren, étudiant en MSc Data Management à Paris School of Business.
+
+## 4. Synthèse du document
+
+Le document illustre les différences synthaxiques des logiciels de programmation Python et R. Il les compare. Le but est de fournir un document où on peut - facilement trouver des informations utiles lorsqu'on travaille sur R et Python. 
+
+A travers ce document, l'auteur le structure sous forme de tableau de correspondance des synthaxes. 
+
+Il décompose son document de la manièere suivante : 
+
+1. basic operator
+2. Vector operations
+3. Vector manipulations
+4. Boolean operations
+
+Le document est bien structuré.
+
+## 5. Extrait commenté des parties de code
+
+Renvoie un tableau comparatif des basic operators
+
+### Calculate with R
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+# No import
+10*(1+3-2.4)
+10^2
+10**2
+sqrt(100)
+pi
+cos(pi)
+exp(1)
+log(1)
+round(2.5435, 2)
+a <- 100
+print(a)
+```
+
+
+### Calculate with Python
+
+```{python, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+import numpy as np
+10*(1+3-2.4)
+10^2        # Not correct !
+10**2
+np.sqrt(100)   
+np.pi          
+np.cos(np.pi)     
+np.exp(1)      
+np.log(1)      
+round(2.543534, 2)
+a = 100
+print(a)
+```
+
+Renvoie un tableau comparatif des vector operations
+
+### Vector operations with R
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+v <- c(10, 20, 30)
+v
+length(v)
+2*v+1
+v**2
+log(v)
+w <- c(1, 2, 3)
+v-w
+v*w
+v/w
+v%*%w
+sum(v)
+mean(v)
+min(v)
+max(v)
+sd(v)
+median(v)
+```
+
+### Vector operations with Python
+
+```{python, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+v = np.array([10, 20, 30])
+v
+len(v)
+2*v+1
+v**2
+np.log(v).round(4)
+w = np.array([1, 2, 3])
+v-w
+v*w
+v/w
+np.dot(v,w)
+sum(v)
+np.average(v)
+min(v)
+max(v)
+np.std(v, ddof = 1)
+np.median(v)
+```
+
+## 6. Evaluation du travail suivant les 5 critères
+
+**1.	Comportement du Rmd lors de son exécution**
+
+L'exécution du code Rmd se réalise parfaitement. Il faut cependant que le ecteur ai téléchargé l'entiereté des documents .tex mis à disposition par l'auteur. 
+
+\ 
+
+**2.	Qualité de la rédaction du dossier**
+
+La rédaction de ce document est de très bonne qualité. Il ne comporte aucune faute d'orthographe et synthaxique. 
+
+Le document est très bien rédigé. 
+
+\ 
+
+**3.	Didactisme et pertinence du dossier**
+
+Le dossier se retrouve facilement sur son github qui est d'ailleurs très bien structuré. Le fichier ne comporte pas de table des matières. 
+
+Les tableaux comparatifs sont bien parametrer et l'auteur a du mettre beaucoup de temps avant d'arriver à un tel résultat. 
+
+Il transmet une connaissance nécessaire pour comprendre les différences synthaxiques des deux logiciels. 
+L'objectif de se document est rempli.
+
+
+\ 
+
+**4.	Qualité et lisibilité du RMarkdown**
+
+Le RMarkdown est bien écrit. Les tableaux sont bien très structuré et se génèrent facilement. 
+
+Il est lisible et les chunk sont très bien parametrés. 
+Autre point d'intention : l'auteur à pris le temps de créer desf ichier de parametrage .tex. 
+
+\ 
+
+**5.	Qualité des applications permettant d’illustrer le package**
+
+L'auteur utilise une démarche didactique et pragmatique. Il illustre non pas un package cette fois ci mais les différences de synthaxe pour les même utilisations entre R et Python. 
+
+
+## 7. Conclusion
+
+Il s'agit d'un très bon travail selon moi. 
+L'auteur est arrivé au bout de son travail de manière très visuelle. Les termes qu'il adopte sont très bien choisis et illustrent avec pertinence ses propos. 
+Le document est didactique et s'adresse à tous ceux manipulants à la fois R et Python. Il est vrai que les apprenants peuvent parfois s'emmeler les pinceaux entre les différents termes des logiciels. Grâce à ce tutoriel, nous pouvons avoir simplement sous la main une correspondance des synthaxes entre R et Python. Je trouve l'idée brillante et peu de document aussi qualitatif se trouvent facilement accessibles sur le net. 
+
+\ 
+
+\ 
+
+\ 
+
+\ 
+
+Vous retrouvez ce document sur mon [**GitHub**](https://github.com/GaspardPalay/PSBX).

@@ -1,0 +1,189 @@
+---
+title: "Gaspard_Palay_TutoLatex_JiayueLiu"
+author: "Gaspard PALAY"
+date: "1/30/2021"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+library(tinytex)
+```
+
+## 1. Critères d'évaluation 
+
+1.	Comportement du Rmd lors de son exécution
+2.	Qualité rédactionnelle du dossier
+3.	Didactisme et pertinence du dossier
+4.	Qualité et lisibilité du Rmarkdown
+5.	Qualité des applications permettant d’illustrer le package
+
+
+## 2. Lien vers le document commenté
+
+En cliquant [**ici**](https://github.com/liu-jiayue/psbx/tree/main/tutoriel_latex), vous trouverez le lien menant au GitHub de Jiayue Liu qui héberge les travail réalisé.
+
+## 3. Auteurs du document commenté
+
+Le document évalué dans le cadre de ce rendu a été produit par Jiayue Liu, étudiant en MSc Data Management à Paris School of Business.
+
+## 4. Synthèse du document
+
+Le document illustre l'utilisation du logiciel LaTeX et s'interesse plus particulièrement à la synthaxe qu'il faut adopter afin de rendre un document aux formules mathématiques multiples. 
+
+LaTeX est un logiciel de préparation de documents. Lors de la rédaction, le rédacteur utilise du texte simple par opposition au texte formaté.
+
+LaTeX est largement utilisé dans le milieu universitaire pour la communication et la publication de documents scientifiques dans de nombreux domaines, notamment les mathématiques, les statistiques, l'informatique, l'ingénierie, la physique, l'économie, la linguistique, la psychologie quantitative, la philosophie et les sciences politiques. Il joue également un rôle important dans la préparation et la publication de livres et d'articles contenant des documents multilingues complexes, tels que le sanskrit et le grec. LaTeX utilise le programme de composition TeX pour la mise en forme de sa sortie, et est lui-même écrit dans le langage macro TeX.
+
+A travers ce document, l'auteur commence tout d'abord par expliquer les fonctions de base de Latex et sa synthaxe. Il décompose son document de la manièere suivante : 
+
+1. les bases 
+2. Les symboles et caractères 
+3. Les environnements 
+4. L'insertion et la manipulation de graphique 
+
+Le document est bien structuré et une table des matières est présente en début de document ce qui facilite sa lecture
+
+## 5. Extrait commenté des parties de code
+
+Tout d'abord, l'auteur commence par expliquer au lecteur qu'il doit introdroduire son document mathématique produit avec LaTeX en définissant sa class à l'aide de la fonction 
+
+```
+\documentclass{article}
+```
+
+On comprend que la class "article" peut être modifiée pour produire différents types de documents. 
+
+L'auteur explique ensuite ce qu'est un environnement. Il expose au lecteur que un doit être ouvert et fermé avec les commandes `\begin{}` et `\end{}`.
+
+Les environnements sont décrits selon la typographie. Ils permettent de numéroter les equations. 
+Il explicite ses propos grâce a un exemple d'environnement 
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+\begin{equation}
+\label{S}
+S=\pi r^2
+\end{equation}
+```
+Il explique ensuite que les commentaites Latex sont pas écrit comme sur R avec # mais avec % et que Latex ne prend pas en compte ni espace ni tabulation.
+
+L'auteur introduit ensuite les typographies mathématiques et les deux modes de saisie à savoir : 
+Il existe deux modes typographiques sous LaTeX qui chacun détermine l'affichage du résultat de sortie.
+
+**Ordinary Math Mode** : le contenu mathématique commence par `\(` ou `$` et finit par `\)` ou `$` et est mélangé avec le texte.
+
+**Display Math Mode** : le contenu mathématique est détaché du reste du texte ; cela commence par `\[` et se termine par `\]`. On peut considérer cette syntaxe comme une version abrégée de `\begin{equation}` et `\end{equation}`.
+
+Il présente ensuite au lecteure les symboles basiques avec les opérateurs binaires (`+`, `-`, `*`, `/`)  et les relation : (`=`, `<`, `>`)
+
+Il donne ensuite les tableaux de correspondances des symboles suivants : 
+
+|**Types de symboles**|**Code**   | **Entrée**      | **Sortie**      |
+|---------------------|-----------|-----------------|-----------------|
+| Exposant            | `^`       | `a^{1}`         | $a^{1}$         |
+| Indice              | `_`       | `x_{1}`         | $x_{1}$         |
+| Fraction            | `\frac`   | `\frac{x}{y}`   | $\frac{x}{y}$   |
+| Racine carrée       | `\sqrt`   | `\sqrt[n]{x}`   | $\sqrt[n]{x}$   |
+|                     |           | `\sqrt{x}`      | $\sqrt{x}$      |
+| Somme               | `\sum`    | `\sum{k=1}^n`   | $\sum{k=1}^n$   |
+| Produit             | `\prod`   | `\prod{k=1}^n`  | $\prod{k=1}^n$  |
+
+\newpage
+
+
+|            	|            	|           	|           	|          	|          	|                   	|                   	|
+|------------	|------------	|-----------	|-----------	|----------	|----------	|-------------------	|-------------------	|
+| $\leq$     	| `\leq`     	| $\geq$    	| `\geq`    	| $\neq$   	| `\neq`   	| $\approx$         	| `\approx`         	|
+| $\times$   	| `\times`   	| $\div$    	| `\div`    	| $\pm$    	| `\pm`    	| $\cdot$           	| `\cdot`           	|
+| $^{\circ}$ 	| `^{\circ}` 	| $\circ$   	| `\circ`   	| $\prime$ 	| `\prime` 	| $\cdots$          	| `\cdots`          	|
+| $\infty$   	| `\infty`   	| $\neg$    	| `\neg`    	| $\wedge$ 	| `\wedge` 	| $\vee$            	| `\vee`            	|
+| $\supset$  	| `\supset`  	| $\forall$ 	| `\forall` 	| $\in$    	| `\in`    	| $\rightarrow$     	| `\rightarrow`     	|
+| $\subset$  	| `\subset`  	| $\exists$ 	| `\exists` 	| $\notin$ 	| `\notin` 	| $\Rightarrow$     	| `\Rightarrow`     	|
+| $\cup$     	| `\cup`     	| $\cap$    	| `\cap`    	| $\mid$   	| `\mid`   	| $\Leftrightarrow$ 	| `\Leftrightarrow` 	|
+| $\dot a$   	| `\dot a`   	| $\hat a$  	| `\hat a`  	| $\bar a$ 	| `\bar a` 	| $\tilde a$        	| `\tilde a`        	|
+| $\alpha$   	| `\alpha`   	| $\beta$   	| `\beta`   	| $\gamma$ 	| `\gamma` 	| $\delta$          	| `\delta`          	|
+| $\epsilon$ 	| `\epsilon` 	| $\zeta$   	| `\zeta`   	| $\eta$   	| `\eta`   	| $\varepsilon$     	| `\varepsilon`     	|
+| $\theta$   	| `\theta`   	| $\iota$   	| `\iota`   	| $\kappa$ 	| `\kappa` 	| $\vartheta$       	| `\vartheta`       	|
+| $\lambda$  	| `\lambda`  	| $\mu$     	| `\mu`     	| $\nu$    	| `\nu`    	| $\xi$             	| `\xi`             	|
+| $\pi$      	| `\pi`      	| $\rho$    	| `\rho`    	| $\sigma$ 	| `\sigma` 	| $\tau$            	| `\tau`            	|
+| $\upsilon$ 	| `\upsilon` 	| $\phi$    	| `\phi`    	| $\chi$   	| `\chi`   	| $\psi$            	| `\psi`            	|
+| $\omega$   	| `\omega`   	| $\Gamma$  	| `\Gamma`  	| $\Delta$ 	| `\Delta` 	| $\Theta$          	| `\Theta`          	|
+| $\Lambda$  	| `\Lambda`  	| $\Xi$     	| `\Xi`     	| $\Pi$    	| `\Pi`    	| $\Sigma$          	| `\Sigma`          	|
+| $\Upsilon$ 	| `\Upsilon` 	| $\Phi$    	| `\Phi`    	| $\Psi$   	| `\Psi`   	| $\Omega$          	| `\Omega`          	|
+
+
+L'auteur présente succintement les parties suivantes : 
+
+- Les délimiteurs   
+- Les fonctions     
+- L'espacement    
+- Les environnements     
+  • equation    
+  • split et gather     
+  • align    
+  • array    
+
+Il présente finalement à l'auteur la manièere d'insérer un graphique avec Latex avec la commande `includegraphics[options]{nom du fichier}` ainsi que la manièere d'intéragir avec le graphique. via la commande `\caption` et les paramètres 'angle' ou 'scale'. 
+
+## 6. Evaluation du travail suivant les 5 critères
+
+**1.	Comportement du Rmd lors de son exécution**
+
+L'exécution du code Rmd se réalise parfaitement à condition que l'auteyr ait préalablement installé les packages nécessaire et retiré les images insérés dans le RMD par l'auteur qui étaient localisé en local. Il a cependant pensé à joindre ses fichiers sur son githib ce qui est un très bon point. 
+\ 
+
+**2.	Qualité de la rédaction du dossier**
+
+La rédaction de ce document est de très bonne qualité. Il ne comporte aucune faute d'orthographe et synthaxique. 
+
+Le document est très bien rédigé, l'auteur a pris le temps de créer un tableau de correspondance des champs directement dans son RMD plutot que de renvoyer un cheatsheet prise en ligne. 
+
+\ 
+
+**3.	Didactisme et pertinence du dossier**
+
+Le dossier se retrouve facilement sur son githib qui est d'ailleurs très bien structuré. Le fichier comporte une table des matières ce qui est très agréable en préambule de la lecture d'un document. Le lecteur sait tout de suite à quoi s'attendre sans avoir besoin de parcourir l'entiereté du document au préalable.
+
+Les descriptions sont bien explicitées et bien illustrées. 
+
+L'auteur arrive à faire adhérer le lecteur à sa production. Il transmet une connaissance nécessaire à l'utilisation de Latex. 
+L'objectif de se document est rempli, à savoir être un guide pratique de Latex. Il est très pratique. 
+
+Le document est enregistré en local sur mon ordinateur et me servira très prochainement à la réalisation de plusieurs travaux personnels.
+
+\ 
+
+**4.	Qualité et lisibilité du RMarkdown**
+
+Le RMarkdown est bien écrit. Les tableaux sont bien structuré. 
+
+Il est lisible et les chunk sont très bien parametrés. 
+
+\ 
+
+**5.	Qualité des applications permettant d’illustrer le package**
+
+L'auteur s'est appuyé sur divers fonction mathématiques afin d'ilustrer ses propos. Ceux ci ont été très bien choisi et mettent en exergue les possibilités infinies qu'offre Latex. 
+
+
+## 7. Conclusion
+
+Il s'agit d'un très bon travail selon moi. 
+L'auteur est arrivé au bout de son travail de manièere très pédagogique et didactique. Les termes qu'il adopte sont très bien choisis et illustrent avec pertinence ses propos. 
+On y apprend beaucoup de choses. Je garderai ce document et il me servira à la réalisation de divers travaux personnels. 
+
+\ 
+
+\ 
+
+\ 
+
+\ 
+
+Vous retrouvez ce document sur mon [**GitHub**](https://github.com/GaspardPalay/PSBX).

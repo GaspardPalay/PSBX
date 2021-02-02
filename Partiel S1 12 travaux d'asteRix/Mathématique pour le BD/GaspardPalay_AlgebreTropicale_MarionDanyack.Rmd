@@ -1,0 +1,96 @@
+---
+title: "Gaspard Palay / Algèbre tropicale"
+author: "Gaspard Palay"
+date: "29/01/2021"
+output:
+  pdf_document:
+    latex_engine: xelatex
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Critères d'évaluation 
+
+1.	Comportement du Rmd lors de son exécution
+2.	Qualité de la rédaction du dossier
+3.	Didactisme et pertinence du dossier
+4.	Qualité et lisibilité du Rmarkdown
+5.	Qualité des explications du modèle mathématique
+
+
+## 2. Lien vers le document commenté
+
+En cliquant [**ici**](https://github.com/MarionD436/MATHS/blob/main/Algebre%20de%20groupe%20en%20caracteristique%201%20et%20distances%20invariantes%20sur%20un%20groupe%20fini.pdf), vous trouverez le lien menant au GitHub de Marion DANYACH hébergeant le fruit de sa réalisation.
+
+## 3. Auteurs du document commenté
+
+Le document évalué dans le cadre de ce rendu a été produit par  marion DANYACH étudiante en MSc Data Management à Paris School of Business.
+
+## 4. Synthèse du document
+
+Le document se décompose en plusieurs partie didactique. La premièere s'interesse à la définition de l'algébre tropicale. Le concept nécessite une grande capacité d'abstraction car il redéfinie notre sens de l'algebre commune. 
+L'autrice introduit ensuite ses applications en questionnant finalement le lecteur avec des questions réthoriques. 
+
+Finalement l'algèbre tropicale tire son nom de sa créatrice qui était brésilienne. Il s'applique dans de nombreux champs comme l'analyse, la modélisation, l'évaluation des performances et la synthèse de loids de commande pour des classes bien répertoriées de syst§mes à événements discrets, déterministes ou stochastiques. 
+A titre d'exemple, l'autrice en donne un bien parlant : les scripts SQL qui sont indempotent dû au fait qu'il ne modifient pas les données lors de leurs exécutions. 
+
+L'autrice du document s'interesse alors aux insights du papier de recherche en le résumant puis expose quelques expressions mathématiques. 
+
+\ 
+
+## 5. Extrait commenté des parties de code
+
+e+f peut être qualifié d'indépotent si et seulement si e*f = e+f  lorsque e et f sont des indempotents centraux. 
+
+N(e) ≠ 1k est irréductible s'il est central et vérifie la condition suivante : 
+e = fg ou f et g sont deux indempotents centraux (e = f ou e = g)
+
+\ 
+
+## 6. Evaluation du travail suivant les 5 critères précités
+
+**1.	Comportement du Rmd à l'exécution**
+
+L'autrice ne fournit pas de RMD mais un PDF seul. Au vu de son travail, elle n'avait pas besoin de fournir le RMD puisque le papier n'avait pas vocation a être reproduit mais seulement être une synthèse d'un article de recherche.
+
+\ 
+
+**2.	Qualité de la rédaction du dossier**
+
+La rédaction de ce document est de bonne qualité. Il est bien structuré, et les étapes de progression son respectées. L'autrice est très pragmatique et sincère avec le lecteur. Elle expose sincèrement les parties qu'elle ne maitrise pas (ex : indempotents centraux)
+
+\ 
+
+**3.	Didactisme et pertinence du dossier**
+
+La lecture de ce dossier est aisée et accessible. Il est didactique. Le dossier est synthétique et résume rapidement la thèse étudiée par l'autrice. 
+
+\ 
+
+**4.	Qualité et lisibilité du RMD**
+
+Le fichier est lisible et accessible sur son GitHub. Le fichier est compilé en PDF à partir du RMD. Il comporte des expréssion Latex.
+Il est lisible et aéré. Les titres sont très bien mis en forme
+
+\ 
+
+**5.	Qualité des explications du modèle mathématique**
+
+L'autrice démontre pertinemment les insights du papier de recherche à l'aide de formulation mathématiques simples et accessibles à tous niveaux. 
+
+## 7. Conclusion
+
+Selon moi, il s'agit globalement d'un très bon travail.  
+L'autrice expose son niveau de compréhension de l'algèbre tropicale et synthétise ses concepts de manière aisée et pédagogique. Elle fournit des documentations annexes de qualité tout en citant ses sources. 
+
+\ 
+
+\ 
+
+\ 
+
+\ 
+
+Vous retrouvez ce document sur mon [**GitHub**](https://github.com/GaspardPalay/PSBX).

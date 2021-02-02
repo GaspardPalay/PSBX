@@ -1,0 +1,123 @@
+---
+title: "Gaspard Palay TutoDataTable Mazzucato Jupiter"
+author: "Gaspard PALAY"
+date: "1/30/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Critères d'évaluation 
+
+1.	Comportement du Rmd lors de son exécution
+2.	Qualité rédactionnelle du dossier
+3.	Didactisme et pertinence du dossier
+4.	Qualité et lisibilité du Rmarkdown
+5.	Qualité des applications permettant d’illustrer le package
+
+
+## 2. Lien vers le document commenté
+
+En cliquant [**ici**](https://github.com/clairemazzucato/PSBX/tree/main/Packages/Data.table), vous trouverez le lien menant au GitHub de Thomas Massé qui héberge les travail réalisé.
+
+## 3. Auteurs du document commenté
+
+Le document évalué dans le cadre de ce rendu a été produit par Claire MAZZUCATO et Adrien JUPITER, étudiants en MSc Data Management à Paris School of Business.
+
+## 4. Synthèse du document
+
+Le document illustre l'utilisation du package data.tanle et s'interesse à son utilisation, à sa popularité, et à l'atlternative de la data frame traditionelle. 
+
+Les auteurs expliquent aux lecteurs que ce package est très populaire du à sa capaicté de gérer une très grande quantité de données plus rapidemment que le ferait les packages traditionnels. 
+
+Les auteurs composent un taravail didactique se décomposant de la manière suivante : 
+- Installaton du package
+- Usage du package 
+- Conversion des datasets 
+- Fonction de filre du package
+- Selection / renommage / regroupement / jonction / des tables et colonnes 
+
+Les auteurs utiisent le dataset mtcars pour illustrer leurs propos. 
+
+## 5. Extrait commenté des parties de code
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+# dataframe syntaxe
+mtcars[mtcars$cyl == 6 & mtcars$gear == 4, ]
+# datatable syntaxe
+mtcars_dt[cyl==6 & gear==4, ]
+```
+
+Cette partie du code filtre les colonnes cycl et gear portant les valeurs 6 et 4
+
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+setnames(mtcars_dt, 'vs', 'engine_type')
+colnames(mtcars_dt)
+```
+
+Cette partie du code renomme grace à la fonction intégrée setnames de data.frame la colonne par 'engine_types'
+
+```{r, echo=TRUE, warning= FALSE, results = FALSE, eval=FALSE, include=TRUE}
+dcast.data.table(mtcars_dt, cyl ~ carb, fun.aggregate = mean, value.var = 'mpg')
+```
+
+Cette autre partie crée un tableau croisé dynamique montrant le kilométrage moyen `mpg` des cylindres par rapport au carburateur `Carb`.
+
+## 6. Evaluation du travail suivant les 5 critères
+
+**1.	Comportement du Rmd lors de son exécution**
+
+L'exécution du code Rmd se réalise parfaitement et sans conditions. Le code RMD appelle bien les librarie nécessaire et les installe aussi si l'utilisateur ne les possède pas au préalable. 
+\ 
+
+**2.	Qualité de la rédaction du dossier**
+
+La rédaction de ce document est de très bonne qualité. Il ne comporte aucune faute d'orthographe et synthaxique. 
+
+Le document est très bien rédigé. 
+
+\ 
+
+**3.	Didactisme et pertinence du dossier**
+
+Le dossier se retrouve facilement sur son github qui est d'ailleurs très bien structuré. Le fichier ne comporte pas de table des matières. 
+
+Les descriptions sont bien explicitées et bien illustrées grace au dataset mtcars. 
+
+L'auteur arrive à faire adhérer le lecteur à sa production. Il transmet une connaissance nécessaire à la reproduction de son travail. Le document est pertinent pusique chacun des élèves de la promotion manipule au quotidien des dataframe. 
+
+Le document et didactique car il se veut sous la forme d'un tutoriel. 
+
+\ 
+
+**4.	Qualité et lisibilité du RMarkdown**
+
+Le RMarkdown est bien écrit. Les tableaux sont bien structurés très lisibles. 
+Il est lisible et les chunk sont très bien parametrés. 
+
+\ 
+
+**5.	Qualité des applications permettant d’illustrer le package**
+
+Les auteurs utilisent un dataset populaire pour appuyer leur démonstration. Ils illustrent toutes les fonctions avec leur utilisation sur le dataset précité. 
+
+## 7. Conclusion
+
+Il s'agit d'un bon travail selon moi. 
+L'auteur est arrivé au bout de son travail et synthétisant les principales fonction de data.table en le comparant au package pré intégré à R : data.frame. Les termes qu'il adopte sont très bien choisis et illustrent avec pertinence ses propos. 
+Le document est enregistré en local sur mon ordinateur et me servira très probablement à la réalisation de travaux personnels.
+
+\ 
+
+\ 
+
+\ 
+
+\ 
+
+Vous retrouvez ce document sur mon [**GitHub**](https://github.com/GaspardPalay/PSBX).
